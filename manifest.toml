@@ -1,0 +1,79 @@
+#:schema https://raw.githubusercontent.com/YunoHost/apps/master/schemas/manifest.v2.schema.json
+
+packaging_format = 2
+
+id = "octoprint"
+name = "OctoPrint"
+description.en = "Snappy web interface for your 3D printer"
+
+version = "1.11.7~ynh1"
+
+maintainers = ["Thovi98"]
+
+[upstream]
+license = "AGPL-3.0"
+website = "https://docs.octoprint.org/en/main/"
+admindoc = "https://docs.octoprint.org/en/main/"
+code = "https://github.com/OctoPrint/OctoPrint"
+
+[integration]
+yunohost = ">= 12.1.39"
+helpers_version = "2.1"
+architectures = "all"
+multi_instance = true
+
+ldap = true
+sso = false
+
+disk = "50M"
+ram.build = "50M"
+ram.runtime = "50M"
+
+[install]
+    [install.domain]
+    type = "domain"
+
+    [install.path]
+    type = "path"
+    default = "/printer"
+
+    [install.init_main_permission]
+    type = "group"
+    default = "visitors"
+
+    [install.admin]
+    type = "user"
+    help.en = "Choose your admin user."
+
+    [install.password]
+    help.en = "Set the password for your admin user here. It should be the official password for ldap to work."
+    type = "password"
+
+  [resources]
+
+    [resources.sources]
+      [resources.sources.ldap]
+      url = "https://github.com/gillg/OctoPrint-LDAP/archive/841504487d7c5e634a93e4bd32c71f06b974ed36.zip"
+      sha256 = "6bbd955a2b5ddcca3447ba1815169fc32d27207b331eeea86aa408be3afcae64"
+      extract = false
+      rename = "ldap.zip"
+
+      autoupdate.upstream = "https://github.com/gillg/OctoPrint-LDAP"
+      autoupdate.strategy = "latest_github_commit"
+
+    [resources.system_user]
+
+    [resources.install_dir]
+
+    [resources.data_dir]
+    subdirs = [ "upload", "timelapse", "watched"]
+
+    [resources.permissions]
+    main.url = "/"
+
+    [resources.ports]
+    main.default = 5000
+
+    [resources.apt]
+    packages = "python3, python3-venv, python3-dev, libsasl2-dev, libldap2-dev, libssl-dev"
+
