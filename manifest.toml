@@ -48,6 +48,13 @@ ram.runtime = "50M"
   [resources]
 
     [resources.sources]
+    # Only used for auto-updater
+    [resources.sources.main]
+    url = "https://github.com/OctoPrint/OctoPrint/releases/download/1.11.7/octoprint-1.11.7.tar.gz"
+    sha256 = "d761dc092f642f1810e7b28046bc62063546f1326cc17d8f9b05edfb42a85f2b"
+    prefetch = false
+
+    autoupdate.strategy = "latest_github_release"
       [resources.sources.ldap]
       url = "https://github.com/gillg/OctoPrint-LDAP/archive/841504487d7c5e634a93e4bd32c71f06b974ed36.zip"
       sha256 = "6bbd955a2b5ddcca3447ba1815169fc32d27207b331eeea86aa408be3afcae64"
